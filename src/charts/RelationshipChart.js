@@ -1,6 +1,7 @@
 import {create, select} from 'd3-selection'
 import {zoom} from 'd3-zoom'
 import {Graphviz} from '@hpcc-js/wasm'
+import {d3SaveSvg} from './d3-save-svg.js'
 
 function createGraph(graph) {
   const data = graph.getData()
@@ -559,6 +560,9 @@ export function RelationshipChart(
       maxImages,
       grampsId
     )
+    const bb = svg.node().getBBox()
+    svg.attr('viewBox', [bb.x - 50, bb.y - 50, bb.width + 100, bb.height + 100])
+    d3SaveSvg(svg.node(), {filename: 'grafik'})
     svg.attr('viewBox', [
       -bboxWidth / 2,
       -bboxHeight / 2,
